@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<config>
+
+    <modules>
+        <Aoe_TemplateHints>
+            <version>0.0.1</version>
+        </Aoe_TemplateHints>
+    </modules>
+
+	<global>
+	
+		<models>
+			<aoe_templatehints>
+				<class>Aoe_TemplateHints_Model</class>
+			</aoe_templatehints>
+		</models>
+	
+		<events>
+			<core_block_abstract_to_html_after>
+				<observers>
+				
+					<core_block_abstract_to_html_after>
+						<type>singleton</type>
+						<class>Aoe_TemplateHints_Model_Observer</class>
+						<method>core_block_abstract_to_html_after</method>
+					</core_block_abstract_to_html_after>
+					
+				</observers>
+			</core_block_abstract_to_html_after>
+		</events>
+	</global>
+	 
+</config>

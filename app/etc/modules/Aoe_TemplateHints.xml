@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Aoe_TemplateHints>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Aoe_TemplateHints>
+    </modules>
+</config>
