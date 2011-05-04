@@ -16,17 +16,17 @@ class Aoe_TemplateHints_Model_Observer {
 	 *
 	 * @return bool
 	 */
-    public function showHints() {
-        if (is_null($this->showHints)) {
-        	$this->showHints = false;
-        	if (Mage::helper('core')->isDevAllowed()) {
-        		if (Mage::getModel('core/cookie')->get('ath') || Mage::getSingleton('core/app')->getRequest()->get('ath')) {
-            		$this->showHints = true;
-        		}
-        	}
-        }
-        return $this->showHints;
-    }
+	public function showHints() {
+		if (is_null($this->showHints)) {
+			$this->showHints = false;
+			if (Mage::helper('core')->isDevAllowed()) {
+				if (Mage::getModel('core/cookie')->get('ath') || Mage::getSingleton('core/app')->getRequest()->get('ath')) {
+					$this->showHints = true;
+				}
+			}
+		}
+		return $this->showHints;
+	}
 
 
 
@@ -55,11 +55,11 @@ class Aoe_TemplateHints_Model_Observer {
 		$info['PATH'] = $this->getBlockPath($block);
 
 		if ($block instanceof Mage_Cms_Block_Block) {
-		    $info['CMS-BLOCK-ID'] = $block->getBlockId();
+			$info['CMS-BLOCK-ID'] = $block->getBlockId();
 		}
 
 		if ($block instanceof Mage_Cms_Block_Page) {
-		    $info['CMS-PAGE-ID'] = $block->getPage()->getIdentifier();
+			$info['CMS-PAGE-ID'] = $block->getPage()->getIdentifier();
 		}
 
 		$templateFile = $block->getTemplateFile();
@@ -122,22 +122,22 @@ class Aoe_TemplateHints_Model_Observer {
 	protected function getBlockPath(Mage_Core_Block_Abstract $block) {
 		$blockPath = '';
 		$step = $block;
-        $aliasName = '';
+		$aliasName = '';
 		while ($step instanceof Mage_Core_Block_Abstract) {
-    		$aliasNamePart = $step->getNameInLayout();
-    		$alias = $step->getBlockAlias();
-    		if ($aliasNamePart != $alias) {
-    			$aliasNamePart = 'name: '.$aliasNamePart;
-    			if ($alias) {
-    				$aliasNamePart .= ' /alias: '. $alias ;
-    			}
-    		} else {
-    			$aliasNamePart = 'alias/name: '.$aliasNamePart;
-    		}
-    		$blockPath .= (!empty($blockPath) ? ' <- ' : '') . get_class($step) . ' ('.$aliasNamePart.') ';
-    		$step = $step->getParentBlock();
-    	}
-    	return $blockPath;
+			$aliasNamePart = $step->getNameInLayout();
+			$alias = $step->getBlockAlias();
+			if ($aliasNamePart != $alias) {
+				$aliasNamePart = 'name: '.$aliasNamePart;
+				if ($alias) {
+					$aliasNamePart .= ' /alias: '. $alias ;
+				}
+			} else {
+				$aliasNamePart = 'alias/name: '.$aliasNamePart;
+			}
+			$blockPath .= (!empty($blockPath) ? ' <- ' : '') . get_class($step) . ' ('.$aliasNamePart.') ';
+			$step = $step->getParentBlock();
+		}
+		return $blockPath;
 	}
 
 
@@ -153,13 +153,13 @@ class Aoe_TemplateHints_Model_Observer {
 	protected function getCacheInfo(Mage_Core_Block_Abstract $block) {
 		$cacheLifeTime = $block->getCacheLifetime();
 		$cacheInfo = '';
-        if (!is_null($cacheLifeTime)) {
-        	$cacheLifeTime = (intval($cacheLifeTime) == 0) ? 'forever' : intval($cacheLifeTime) . ' sec';
+		if (!is_null($cacheLifeTime)) {
+			$cacheLifeTime = (intval($cacheLifeTime) == 0) ? 'forever' : intval($cacheLifeTime) . ' sec';
 			$cacheInfo = 'Lifetime: ' . $cacheLifeTime .', ';
-        	$cacheInfo .= 'Key:' . $block->getCacheKey() . ', ';
-        	$cacheInfo .= 'Tags: ' . implode(',', $block->getCacheTags()) . '';
-       	}
-       	return $cacheInfo;
+			$cacheInfo .= 'Key:' . $block->getCacheKey() . ', ';
+			$cacheInfo .= 'Tags: ' . implode(',', $block->getCacheTags()) . '';
+		}
+		return $cacheInfo;
 	}
 
 }

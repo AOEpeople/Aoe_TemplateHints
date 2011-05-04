@@ -1,48 +1,48 @@
 <?xml version="1.0"?>
-<!-- 
+<!--
 /**
  * Template hints
  *
  * @author Fabrizio Branca <fabrizio.branca@aoemedia.de>
  * @author André Herrn <info@andre-herrn.de> (Thanks, for making border colors configurable)
  */
- -->
+-->
 <config>
-    <sections>
-        <dev>
-            <groups>
-                <debug>
-                    <fields>
-                        <border_color_notcached translate="label">
-                            <label>Color not cached</label>
-                            <comment><![CDATA[Border color of blocks which are not cached (W3C-colorname or hex value)]]></comment>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>100</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </border_color_notcached>
-                        <border_color_cached translate="label">
-                            <label>Color cached</label>
-                            <comment><![CDATA[Border color of blocks which are cached (W3C-colorname or hex value)]]></comment>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>110</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </border_color_cached>
-                        <border_color_cached_inherit translate="label">
-                            <label>Color cached inherit</label>
-                            <comment><![CDATA[Border color of blocks which are cached implicitly because they consist to a parent block which is cached (W3C-colorname or hex value)]]></comment>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>120</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </border_color_cached_inherit>             
-                    </fields>
-                </debug>
-            </groups>
-        </dev>
-    </sections>
+	<sections>
+		<dev>
+			<groups>
+				<debug>
+					<fields>
+						<border_color_notcached translate="label">
+							<label>Color not cached</label>
+							<comment><![CDATA[Border color of blocks which are not cached (W3C-colorname or hex value)]]></comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>100</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</border_color_notcached>
+						<border_color_cached translate="label">
+							<label>Color cached</label>
+							<comment><![CDATA[Border color of blocks which are cached (W3C-colorname or hex value)]]></comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>110</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</border_color_cached>
+						<border_color_cached_inherit translate="label">
+							<label>Color cached inherit</label>
+							<comment><![CDATA[Border color of blocks which are cached implicitly because they consist to a parent block which is cached (W3C-colorname or hex value)]]></comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>120</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</border_color_cached_inherit>
+					</fields>
+				</debug>
+			</groups>
+		</dev>
+	</sections>
 </config>
