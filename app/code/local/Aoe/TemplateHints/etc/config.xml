@@ -4,7 +4,7 @@
  * Template hints
  *
  * @author Fabrizio Branca <fabrizio.branca@aoemedia.de>
- * @author André Herrn <info@andre-herrn.de>
+ * @author André Herrn <info@andre-herrn.de> (Thanks, for making border colors configurable)
  */
  -->
 <config>
