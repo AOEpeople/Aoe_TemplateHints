@@ -67,13 +67,13 @@ class Aoe_TemplateHints_Model_Observer {
 			$info['TEMPLATE'] = $templateFile;
 		}
 
-		$color = 'red'; // not cached
+		$color = Mage::getStoreConfig('dev/debug/border_color_notcached'); // not cached
 		$cacheInfo = $this->getCacheInfo($block);
 		if ($cacheInfo) {
 			$info['CACHE'] = $cacheInfo;
-			$color = 'green'; // cached
+			$color = Mage::getStoreConfig('dev/debug/border_color_cached'); // cached
 		} elseif ($this->isWithinCachedBlock($block)) {
-			$color = 'orange'; // not cached, but within cached
+			$color = Mage::getStoreConfig('dev/debug/border_color_cached_inherit'); // not cached, but within cached
 		}
 
 		$title = array();
