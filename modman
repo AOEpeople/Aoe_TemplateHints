@@ -1,2 +1,2 @@
-app/etc/modules/Aoe_TemplateHints.xml						htdocs/app/etc/modules/Aoe_TemplateHints.xml
-app/code/local/Aoe/TemplateHints/							htdocs/app/code/local/Aoe/TemplateHints/
+app/etc/modules/Aoe_TemplateHints.xml		app/etc/modules/Aoe_TemplateHints.xml
+app/code/local/Aoe/TemplateHints/			app/code/local/Aoe/TemplateHints/
