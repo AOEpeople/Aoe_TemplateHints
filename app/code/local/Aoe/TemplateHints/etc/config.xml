@@ -10,7 +10,7 @@
 <config>
 	<modules>
 		<Aoe_TemplateHints>
-			<version>0.0.1</version>
+			<version>0.0.2</version>
 		</Aoe_TemplateHints>
 	</modules>
 	<global>
@@ -32,12 +32,12 @@
 		</events>
 	</global>
 	<default>
-	<dev>
-		<debug>
-			<border_color_notcached>red</border_color_notcached>
-			<border_color_cached>green</border_color_cached>
-			<border_color_cached_inherit>orange</border_color_cached_inherit>
-		</debug>
-	</dev>
+		<dev>
+			<debug>
+				<border_color_notcached>red</border_color_notcached>
+				<border_color_cached>green</border_color_cached>
+				<border_color_cached_inherit>orange</border_color_cached_inherit>
+			</debug>
+		</dev>
 	</default>
 </config>
