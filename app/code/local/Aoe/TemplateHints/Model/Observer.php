@@ -11,13 +11,22 @@ class Aoe_TemplateHints_Model_Observer {
 	CONST TYPE_NOTCACHED = 'notcached';
 	CONST TYPE_IMPLICITLYCACHED = 'implicitlycached';
 
+	/**
+	 * @var bool
+	 */
 	protected $showHints;
 
+	/**
+	 * @var bool
+	 */
 	protected $codeWritten = false;
 
+	/**
+	 * @var int
+	 */
 	protected $hintId = 0;
 
-
+	
 
 	/**
 	 * Check if hints should be displayed
@@ -56,7 +65,7 @@ class Aoe_TemplateHints_Model_Observer {
 		if (!$this->codeWritten) {
 			$helper = Mage::helper('aoe_templatehints'); /* @var $helper Aoe_TemplateHints_Helper_Data */
 
-			$wrappedHtml .= '<script type="text/javascript">' . $helper->getSkinFileContent('aoe_templatehints/js/opentip.js') . '</script>';
+			$wrappedHtml .= '<script type="text/javascript">' . $helper->getSkinFileContent('aoe_templatehints/js/opentip.min.js') . '</script>';
 			$wrappedHtml .= '<script type="text/javascript">' . $helper->getSkinFileContent('aoe_templatehints/js/excanvas.js') . '</script>';
 			$wrappedHtml .= '<script type="text/javascript">' . $helper->getSkinFileContent('aoe_templatehints/js/aoe_templatehints.js') . '</script>';
 			$wrappedHtml .= '<style type="text/css">' . $helper->getSkinFileContent('aoe_templatehints/css/aoe_templatehints.css') . '</style>';
@@ -84,6 +93,13 @@ class Aoe_TemplateHints_Model_Observer {
 	}
 
 
+
+	/**
+	 * Render title
+	 *
+	 * @param array $info
+	 * @return string
+	 */
 	protected function renderTitle(array $info) {
 		$title = $info['name'];
 		if ($info['name'] != $info['alias'] && $info['alias']) {
@@ -92,6 +108,15 @@ class Aoe_TemplateHints_Model_Observer {
 		return $title;
 	}
 
+
+
+	/**
+	 * Render box
+	 *
+	 * @param array $info
+	 * @param array $path
+	 * @return string
+	 */
 	protected function renderBox(array $info, array $path) {
 		$output = '';
 

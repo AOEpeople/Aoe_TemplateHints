@@ -1,16 +1,13 @@
-var tips = [];
-
-Event.observe(window,"load",function() {
+Event.observe(window, "load", function() {
     $$(".tpl-hint").each(function(node) {
-
         var id = node.getAttribute('id');
-
-        node.observe('mouseenter', function(event) {
+        node.observe('mouseover', function(event) {
+            Event.stop(event);
             new Tip(
                 this,
                 event,
-                $(node.getAttribute('id') + '-infobox').innerHTML,
-                $(node.getAttribute('id') + '-title').innerHTML,
+                $(id + '-infobox').innerHTML,
+                $(id + '-title').innerHTML,
                 {
                     style: 'slick',
                     hideOn: 'click',
@@ -19,18 +16,6 @@ Event.observe(window,"load",function() {
                 }
             );
         });
-
     });
 });
 
-
-// $(node.getAttribute('id') + '-infobox')
-/*
-
-
-Event.observe(window,"load",function() {
-    $$(".tpl-hint").each(function(node) {
-        node.observe('mouseenter', function(element) { console.log(element)});
-        node.observe('mouseleave', function(element) { console.log(element)});
-    });
-});*/
