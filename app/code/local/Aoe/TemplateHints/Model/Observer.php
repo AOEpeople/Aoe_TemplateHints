@@ -3,11 +3,19 @@
 /**
  * Template hints
  *
- * @author Fabrizio Branca <fabrizio.branca@aoemedia.de>
+ * @author Fabrizio Branca
  */
 class Aoe_TemplateHints_Model_Observer {
 
+	CONST TYPE_CACHED = 'cached';
+	CONST TYPE_NOTCACHED = 'notcached';
+	CONST TYPE_IMPLICITLYCACHED = 'implicitlycached';
+
 	protected $showHints;
+
+	protected $codeWritten = false;
+
+	protected $hintId = 0;
 
 
 
@@ -35,7 +43,7 @@ class Aoe_TemplateHints_Model_Observer {
 	 *
 	 * @param Varien_Event_Observer $params
 	 * @return void
-	 * @author Fabrizio Branca <fabrizio.branca@aoemedia.de>
+	 * @author Fabrizio Branca
 	 * @since 2011-01-24
 	 */
 	public function core_block_abstract_to_html_after(Varien_Event_Observer $params) {
@@ -44,48 +52,73 @@ class Aoe_TemplateHints_Model_Observer {
 			return;
 		}
 
+		$wrappedHtml = '';
+		if (!$this->codeWritten) {
+			$helper = Mage::helper('aoe_templatehints'); /* @var $helper Aoe_TemplateHints_Helper_Data */
+
+			$wrappedHtml .= '<script type="text/javascript">' . $helper->getSkinFileContent('aoe_templatehints/js/opentip.js') . '</script>';
+			$wrappedHtml .= '<script type="text/javascript">' . $helper->getSkinFileContent('aoe_templatehints/js/excanvas.js') . '</script>';
+			$wrappedHtml .= '<script type="text/javascript">' . $helper->getSkinFileContent('aoe_templatehints/js/aoe_templatehints.js') . '</script>';
+			$wrappedHtml .= '<style type="text/css">' . $helper->getSkinFileContent('aoe_templatehints/css/aoe_templatehints.css') . '</style>';
+			$wrappedHtml .= '<style type="text/css">' . $helper->getSkinFileContent('aoe_templatehints/css/opentip.css') . '</style>';
+
+			$this->codeWritten = true;
+		}
+
 		$block = $params->getBlock(); /* @var $block Mage_Core_Block_Abstract */
+
 		$transport = $params->getTransport();
 
-		$info = array();
+		$path = $this->getBlockPath($block);
+		$blockInfo = $this->getBlockInfo($block);
 
-		$moduleName = $block->getModuleName();
+		$this->hintId++;
 
-		$info['MODULE'] = $moduleName;
-		$info['PATH'] = $this->getBlockPath($block);
+		$wrappedHtml .= '<div id="tpl-hint-'.$this->hintId.'" class="tpl-hint ' . $blockInfo['cache-status'] . '">';
+			$wrappedHtml .= $transport->getHtml();
+			$wrappedHtml .= '<div id="tpl-hint-'.$this->hintId.'-title" style="display: none;">' . $this->renderTitle($blockInfo) . '</div>';
+			$wrappedHtml .= '<div id="tpl-hint-'.$this->hintId.'-infobox" style="display: none;">' . $this->renderBox($blockInfo, $path) . '</div>';
+		$wrappedHtml .= '</div>';
 
-		if ($block instanceof Mage_Cms_Block_Block) {
-			$info['CMS-BLOCK-ID'] = $block->getBlockId();
+		$transport->setHtml($wrappedHtml);
+	}
+
+
+	protected function renderTitle(array $info) {
+		$title = $info['name'];
+		if ($info['name'] != $info['alias'] && $info['alias']) {
+			$title .= ' (alias: ' . $info['alias'] . ')';
+		}
+		return $title;
+	}
+
+	protected function renderBox(array $info, array $path) {
+		$output = '';
+
+		$output .= '<dl>';
+
+		foreach ($info as $label => $value) {
+
+			if (in_array($label, array('name', 'alias', 'cache-status'))) {
+				continue;
+			}
+
+			$output .= '<dt>'.ucfirst($label).':</dt><dd>';
+			$output .= $value;
+			$output .= '</dd>';
 		}
 
-		if ($block instanceof Mage_Cms_Block_Page) {
-			$info['CMS-PAGE-ID'] = $block->getPage()->getIdentifier();
-		}
+		$output .= '<dt>Block nesting:</dt><dd>';
+			$output .= '<ul class="path">';
+			foreach ($path as $step) {
+				$output .= '<li>'.$this->renderTitle($step).'</li>';
+			}
+			$output .= '</ul>';
+		$output .= '</dd>';
 
-		$templateFile = $block->getTemplateFile();
-		if ($templateFile) {
-			$info['TEMPLATE'] = $templateFile;
-		}
+		$output .= '</dl>';
 
-		$color = Mage::getStoreConfig('dev/debug/border_color_notcached'); // not cached
-		$cacheInfo = $this->getCacheInfo($block);
-		if ($cacheInfo) {
-			$info['CACHE'] = $cacheInfo;
-			$color = Mage::getStoreConfig('dev/debug/border_color_cached'); // cached
-		} elseif ($this->isWithinCachedBlock($block)) {
-			$color = Mage::getStoreConfig('dev/debug/border_color_cached_inherit'); // not cached, but within cached
-		}
-
-		$title = array();
-		foreach ($info as $key => $value) {
-			$title[] = "$key: $value";
-		}
-		$title = implode(' // ', $title);
-
-		// wrap info around block output
-		$html = $transport->getHtml();
-		$html = '<div class="tpl-hint" title="'.$title.'" style="border: 1px dotted '.$color.'; margin:2px; padding:2px; overflow: hidden;">' . $html . '</div>';
-		$transport->setHtml($html);
+		return $output;
 	}
 
 
@@ -95,7 +128,7 @@ class Aoe_TemplateHints_Model_Observer {
 	 *
 	 * @param Mage_Core_Block_Abstract $block
 	 * @return bool
-	 * @author Fabrizio Branca <fabrizio.branca@aoemedia.de>
+	 * @author Fabrizio Branca
 	 * @since 2011-01-24
 	 */
 	protected function isWithinCachedBlock(Mage_Core_Block_Abstract $block) {
@@ -112,54 +145,73 @@ class Aoe_TemplateHints_Model_Observer {
 
 
 	/**
-	 * Get path information of a block
+	 * Get block information
 	 *
 	 * @param Mage_Core_Block_Abstract $block
-	 * @return string
-	 * @author Fabrizio Branca <fabrizio.branca@aoemedia.de>
-	 * @since 2011-01-24
+	 * @param bool $fullInfo
+	 * @return array
 	 */
-	protected function getBlockPath(Mage_Core_Block_Abstract $block) {
-		$blockPath = '';
-		$step = $block;
-		$aliasName = '';
-		while ($step instanceof Mage_Core_Block_Abstract) {
-			$aliasNamePart = $step->getNameInLayout();
-			$alias = $step->getBlockAlias();
-			if ($aliasNamePart != $alias) {
-				$aliasNamePart = 'name: '.$aliasNamePart;
-				if ($alias) {
-					$aliasNamePart .= ' /alias: '. $alias ;
-				}
-			} else {
-				$aliasNamePart = 'alias/name: '.$aliasNamePart;
-			}
-			$blockPath .= (!empty($blockPath) ? ' <- ' : '') . get_class($step) . ' ('.$aliasNamePart.') ';
-			$step = $step->getParentBlock();
+	protected function getBlockInfo(Mage_Core_Block_Abstract $block, $fullInfo=true) {
+		$info = array(
+			'name' => $block->getNameInLayout(),
+			'alias' => $block->getBlockAlias(),
+		);
+
+		if (!$fullInfo) {
+			return $info;
 		}
-		return $blockPath;
+
+		$info['class'] = get_class($block);
+		$info['module'] = $block->getModuleName();
+
+		if ($block instanceof Mage_Cms_Block_Block) {
+			$info['cms-blockId'] = $block->getBlockId();
+		}
+		if ($block instanceof Mage_Cms_Block_Page) {
+			$info['cms-pageId'] = $block->getPage()->getIdentifier();
+		}
+		$templateFile = $block->getTemplateFile();
+		if ($templateFile) {
+			$info['template'] = $templateFile;
+		}
+
+		// cache information
+		$info['cache-status'] = self::TYPE_NOTCACHED;
+
+		$cacheLifeTime = $block->getCacheLifetime();
+		if (!is_null($cacheLifeTime)) {
+
+			$info['cache-lifetime'] = (intval($cacheLifeTime) == 0) ? 'forever' : intval($cacheLifeTime) . ' sec';
+			$info['cache-key'] = $block->getCacheKey();
+			$info['tags'] = implode(',', $block->getCacheTags());
+
+			$info['cache-status'] = self::TYPE_CACHED;
+		} elseif ($this->isWithinCachedBlock($block)) {
+			$info['cache-status'] = self::TYPE_IMPLICITLYCACHED; // not cached, but within cached
+		}
+
+		return $info;
 	}
 
 
 
 	/**
-	 * Get cache information of a block
+	 * Get path information of a block
 	 *
 	 * @param Mage_Core_Block_Abstract $block
 	 * @return string
-	 * @author Fabrizio Branca <fabrizio.branca@aoemedia.de>
+	 * @author Fabrizio Branca
 	 * @since 2011-01-24
 	 */
-	protected function getCacheInfo(Mage_Core_Block_Abstract $block) {
-		$cacheLifeTime = $block->getCacheLifetime();
-		$cacheInfo = '';
-		if (!is_null($cacheLifeTime)) {
-			$cacheLifeTime = (intval($cacheLifeTime) == 0) ? 'forever' : intval($cacheLifeTime) . ' sec';
-			$cacheInfo = 'Lifetime: ' . $cacheLifeTime .', ';
-			$cacheInfo .= 'Key:' . $block->getCacheKey() . ', ';
-			$cacheInfo .= 'Tags: ' . implode(',', $block->getCacheTags()) . '';
+	protected function getBlockPath(Mage_Core_Block_Abstract $block) {
+		$blockPath = array();
+		$step = $block->getParentBlock();
+		while ($step instanceof Mage_Core_Block_Abstract) {
+			$blockPath[] = $this->getBlockInfo($step, false);
+			$step = $step->getParentBlock();
 		}
-		return $cacheInfo;
+		return $blockPath;
 	}
+
 
 }

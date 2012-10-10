@@ -1,0 +1,51 @@
+.tpl-hint {
+    border: 1px dotted white;
+    margin: 2px;
+    padding: 2px;
+    overflow: hidden;
+}
+
+.notcached { border-color: red; }
+.cached { border-color: green; }
+.implicitlycached { border-color: orange; }
+
+.tpl-hint-infobox {
+    width: 500px;
+    background-color: white;
+    border: 1px solid black;
+    z-index: 1000;
+    position: absolute;
+}
+.tpl-hint:hover {
+    border-style: solid;
+}
+
+.notcached:hover {
+    box-shadow: 0 0 10px 10px red;
+}
+.cached:hover {
+    box-shadow: 0 0 10px 10px green;
+}
+.implicitlycached:hover {
+    box-shadow: 0 0 10px 10px orange;
+}
+
+.ot-container { width: 500px; }
+.opentip .header {
+    margin: 0;
+    padding: 0;
+    position: inherit;
+    text-align: left;
+    width: auto;
+    z-index: auto;
+}
+.opentip .content {
+    text-align: left;
+}
+.opentip dt {
+    font-weight: bold;
+}
+.opentip dd {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
