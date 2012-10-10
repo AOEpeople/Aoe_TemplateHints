@@ -26,7 +26,7 @@ class Aoe_TemplateHints_Model_Observer {
 	 */
 	protected $hintId = 0;
 
-	
+
 
 	/**
 	 * Check if hints should be displayed
