@@ -61,19 +61,6 @@ class Aoe_TemplateHints_Model_Observer {
 			return;
 		}
 
-		$wrappedHtml = '';
-		if (!$this->codeWritten) {
-			$helper = Mage::helper('aoe_templatehints'); /* @var $helper Aoe_TemplateHints_Helper_Data */
-
-			$wrappedHtml .= '<script type="text/javascript">' . $helper->getSkinFileContent('aoe_templatehints/js/opentip.min.js') . '</script>';
-			$wrappedHtml .= '<script type="text/javascript">' . $helper->getSkinFileContent('aoe_templatehints/js/excanvas.js') . '</script>';
-			$wrappedHtml .= '<script type="text/javascript">' . $helper->getSkinFileContent('aoe_templatehints/js/aoe_templatehints.js') . '</script>';
-			$wrappedHtml .= '<style type="text/css">' . $helper->getSkinFileContent('aoe_templatehints/css/aoe_templatehints.css') . '</style>';
-			$wrappedHtml .= '<style type="text/css">' . $helper->getSkinFileContent('aoe_templatehints/css/opentip.css') . '</style>';
-
-			$this->codeWritten = true;
-		}
-
 		$block = $params->getBlock(); /* @var $block Mage_Core_Block_Abstract */
 
 		$transport = $params->getTransport();
@@ -83,11 +70,13 @@ class Aoe_TemplateHints_Model_Observer {
 
 		$this->hintId++;
 
-		$wrappedHtml .= '<div id="tpl-hint-'.$this->hintId.'" class="tpl-hint ' . $blockInfo['cache-status'] . '">';
-			$wrappedHtml .= $transport->getHtml();
-			$wrappedHtml .= '<div id="tpl-hint-'.$this->hintId.'-title" style="display: none;">' . $this->renderTitle($blockInfo) . '</div>';
-			$wrappedHtml .= '<div id="tpl-hint-'.$this->hintId.'-infobox" style="display: none;">' . $this->renderBox($blockInfo, $path) . '</div>';
-		$wrappedHtml .= '</div>';
+		$title = $this->renderTitle($blockInfo);
+		$content = $this->renderBox($blockInfo, $path);
+
+		$wrappedHtml = '';
+		$wrappedHtml .= "<!-- [START] $title\n$content -->";
+		$wrappedHtml .= $transport->getHtml();
+		$wrappedHtml .= '<!-- [END] '.$title.' -->';
 
 		$transport->setHtml($wrappedHtml);
 	}
@@ -120,28 +109,19 @@ class Aoe_TemplateHints_Model_Observer {
 	protected function renderBox(array $info, array $path) {
 		$output = '';
 
-		$output .= '<dl>';
-
 		foreach ($info as $label => $value) {
 
 			if (in_array($label, array('name', 'alias', 'cache-status'))) {
 				continue;
 			}
-
-			$output .= '<dt>'.ucfirst($label).':</dt><dd>';
-			$output .= $value;
-			$output .= '</dd>';
+			$output .= '  '.ucfirst($label).":\n";
+			$output .= '    '.$value.":\n";
 		}
 
-		$output .= '<dt>Block nesting:</dt><dd>';
-			$output .= '<ul class="path">';
-			foreach ($path as $step) {
-				$output .= '<li>'.$this->renderTitle($step).'</li>';
-			}
-			$output .= '</ul>';
-		$output .= '</dd>';
-
-		$output .= '</dl>';
+		$output .= "  Block nesting:\n";
+		foreach ($path as $step) {
+			$output .= '    '.$this->renderTitle($step)."\n";
+		}
 
 		return $output;
 	}
