@@ -1,0 +1,11 @@
+{
+   "name": "fbrnc/Aoe_TemplateHints",
+   "license": ["GPL-3.0"],
+   "type": "magento-module",
+   "description": "Advanced Template Hints for Magento
+",
+   "require": {
+      "magento-hackathon/magento-composer-installer": "dev-master"
+   }
+}
+
