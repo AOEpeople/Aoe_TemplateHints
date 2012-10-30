@@ -1,10 +1,17 @@
 {
-   "name": "fbrnc/Aoe_TemplateHints",
-   "license": ["GPL-3.0"],
-   "type": "magento-module",
-   "description": "Advanced Template Hints for Magento",
-   "require": {
-      "magento-hackathon/magento-composer-installer": "dev-master"
-   }
+    "name": "fbrnc/Aoe_TemplateHints",
+    "license": "OSL-3.0",
+    "type": "magento-module",
+    "description": "Advanced Template Hints for Magento",
+    "homepage": "http://www.fabrizio-branca.de/magento-advanced-template-hints-20.html",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "dev-master"
+    },
+    "authors":[
+        {
+            "name":"Fabrizio Branca",
+            "email":"mail@{firstname}-{lastname}.de"
+        }
+    ]
 }
 
