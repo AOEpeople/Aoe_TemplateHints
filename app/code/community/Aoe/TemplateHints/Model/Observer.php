@@ -27,6 +27,15 @@ class Aoe_TemplateHints_Model_Observer {
 	protected $hintId = 0;
 
 
+    /**
+     * @var array
+     * */
+    protected $aStatistics = array(
+        self::TYPE_CACHED => 0,
+        self::TYPE_IMPLICITLYCACHED => 0,
+        self::TYPE_NOTCACHED => 0,
+    );
+
 
 	/**
 	 * Check if hints should be displayed
@@ -82,12 +91,17 @@ class Aoe_TemplateHints_Model_Observer {
 		$blockInfo = $this->getBlockInfo($block);
 
 		$this->hintId++;
+        $this->aStatistics[$blockInfo['cache-status']]++;
 
 		$wrappedHtml .= '<div id="tpl-hint-'.$this->hintId.'" class="tpl-hint ' . $blockInfo['cache-status'] . '">';
 			$wrappedHtml .= $transport->getHtml();
 			$wrappedHtml .= '<div id="tpl-hint-'.$this->hintId.'-title" style="display: none;">' . $this->renderTitle($blockInfo) . '</div>';
 			$wrappedHtml .= '<div id="tpl-hint-'.$this->hintId.'-infobox" style="display: none;">' . $this->renderBox($blockInfo, $path) . '</div>';
 		$wrappedHtml .= '</div>';
+
+        if($blockInfo['name'] =='core_profiler'){
+            $wrappedHtml .= '<pre>'.print_r($this->aStatistics, true).'</pre>';
+        }
 
 		$transport->setHtml($wrappedHtml);
 	}
