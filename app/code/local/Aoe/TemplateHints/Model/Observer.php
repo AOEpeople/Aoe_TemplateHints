@@ -60,6 +60,10 @@ class Aoe_TemplateHints_Model_Observer {
 		if (!$this->showHints()) {
 			return;
 		}
+		if (substr(trim($params->getTransport()->getHtml()), 0, 4) == 'http') {
+			return;
+		}
+
 
 		$wrappedHtml = '';
 		if (!$this->codeWritten) {
