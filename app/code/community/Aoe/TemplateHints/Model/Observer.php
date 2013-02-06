@@ -208,6 +208,10 @@ class Aoe_TemplateHints_Model_Observer {
 
 			$info['cache-lifetime'] = (intval($cacheLifeTime) == 0) ? 'forever' : intval($cacheLifeTime) . ' sec';
 			$info['cache-key'] = $block->getCacheKey();
+			$info['cache-key-info'] =  = is_array($block->getCacheKeyInfo())
+                		? implode(', ', $block->getCacheKeyInfo())
+                		: $block->getCacheKeyInfo()
+            		;
 			$info['tags'] = implode(',', $block->getCacheTags());
 
 			$info['cache-status'] = self::TYPE_CACHED;
