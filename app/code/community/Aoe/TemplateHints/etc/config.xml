@@ -3,14 +3,13 @@
 /**
  * Template hints
  *
- * @author Fabrizio Branca <fabrizio.branca@aoemedia.de>
- * @author André Herrn <info@andre-herrn.de> (Thanks, for making border colors configurable)
+ * @author Fabrizio Branca
  */
 -->
 <config>
 	<modules>
 		<Aoe_TemplateHints>
-			<version>0.0.2</version>
+			<version>0.2.0</version>
 		</Aoe_TemplateHints>
 	</modules>
 	<global>
@@ -19,6 +18,11 @@
 				<class>Aoe_TemplateHints_Model</class>
 			</aoe_templatehints>
 		</models>
+		<helpers>
+			<aoe_templatehints>
+				<class>Aoe_TemplateHints_Helper</class>
+			</aoe_templatehints>
+		</helpers>
 		<events>
 			<core_block_abstract_to_html_after>
 				<observers>
@@ -31,13 +35,4 @@
 			</core_block_abstract_to_html_after>
 		</events>
 	</global>
-	<default>
-		<dev>
-			<debug>
-				<border_color_notcached>red</border_color_notcached>
-				<border_color_cached>green</border_color_cached>
-				<border_color_cached_inherit>orange</border_color_cached_inherit>
-			</debug>
-		</dev>
-	</default>
 </config>

@@ -1,0 +1,18 @@
+.tpl-hint { outline: 1px dotted white; margin: 2px; padding: 2px; overflow: hidden; }
+
+.notcached { outline-color: red; }
+.cached { outline-color: green; }
+.implicitlycached { outline-color: orange; }
+
+.tpl-hint-infobox { width: 500px; background-color: white; outline: 1px solid black; z-index: 1000; position: absolute; }
+.tpl-hint:hover { outline-style: solid; }
+
+.notcached:hover { box-shadow: 0 0 3px 3px red; }
+.cached:hover { box-shadow: 0 0 3px 3px green; }
+.implicitlycached:hover { box-shadow: 0 0 3px 3px orange; }
+
+.ot-container { width: 500px; }
+.opentip .header { margin: 0; padding: 0; position: inherit; text-align: left; width: auto; z-index: auto; }
+.opentip .content { text-align: left; }
+.opentip dt { font-weight: bold; }
+.opentip dd { margin-left: 20px; margin-bottom: 10px; word-wrap: break-word; }
