@@ -75,16 +75,7 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 
 		$output .= '<dl>';
 
-		foreach ($info as $label => $value) {
-
-			if (in_array($label, array('name', 'alias', 'cache-status'))) {
-				continue;
-			}
-
-			$output .= '<dt>'.ucfirst($label).':</dt><dd>';
-			$output .= $value;
-			$output .= '</dd>';
-		}
+		$output .= $this->arrayToDtDd($info, array('name', 'alias', 'cache-status'));
 
 		$output .= '<dt>'.$helper->__('Block nesting').':</dt><dd>';
 			$output .= '<ul class="path">';
@@ -96,6 +87,29 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 
 		$output .= '</dl>';
 
+		return $output;
+	}
+
+	protected function arrayToDtDd(array $array, array $skipKeys=array()) {
+		$output = '<dl>';
+		foreach ($array as $key => $value) {
+
+			if (in_array($key, $skipKeys)) {
+				continue;
+			}
+
+			if (is_array($value)) {
+				$value = $this->arrayToDtDd($value);
+			}
+			if (is_int($key)) {
+				$output .= $value . '<br />';
+			} else {
+				$output .= '<dt>'.ucfirst($key).':</dt><dd>';
+				$output .= $value;
+				$output .= '</dd>';
+			}
+		}
+		$output .= '</dl>';
 		return $output;
 	}
 

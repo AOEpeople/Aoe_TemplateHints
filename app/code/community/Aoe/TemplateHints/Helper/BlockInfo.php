@@ -11,6 +11,8 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 	CONST TYPE_NOTCACHED = 'notcached';
 	CONST TYPE_IMPLICITLYCACHED = 'implicitlycached';
 
+	protected $classMethodCache = array();
+
 
 
 	/**
@@ -63,7 +65,70 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 			$info['cache-status'] = self::TYPE_IMPLICITLYCACHED; // not cached, but within cached
 		}
 
+		$info['methods'] = $this->getClassMethods($info['class']);
+
 		return $info;
+	}
+
+
+	/**
+	 * Get block methods (incl. methods of parent classes)
+	 *
+	 * @param Mage_Core_Block_Abstract $className
+	 * @return array
+	 */
+	public function getClassMethods($className) {
+
+		if (!isset($this->classMethodCache[$className])) {
+
+			$info = array();
+
+			$rClass = new ReflectionClass($className);
+
+			$currentClass = $rClass;
+			$currentClassName = $currentClass->getName();
+			$currentMethods = get_class_methods($currentClass->getName());
+			$parentClass = $currentClass->getParentClass();
+
+			$level = 1;
+			while ($parentClass && $level < 6) {
+
+				$parentClassName = $parentClass->getName();
+
+				if (!in_array($currentClass->getName(), array('Mage_Core_Block_Abstract', 'Mage_Core_Block_Template'))) {
+					$parentMethods = get_class_methods($parentClassName);
+					$tmp = array_diff($currentMethods, $parentMethods);
+					$info[$currentClassName] = array();
+					foreach ($tmp as $methodName) {
+
+						$parameters = array();
+						foreach ($currentClass->getMethod($methodName)->getParameters() as $parameter) { /* @var $parameter ReflectionParameter */
+							$parameters[] = '$'. $parameter->getName();
+						}
+
+						if (count($parameters) > 3) {
+							$parameters = array_slice($parameters, 0, 2);
+							$parameters[] = '...';
+						}
+
+						$info[$currentClassName][] = $methodName . '(' . implode(', ', $parameters) . ')';
+					}
+				} else {
+					$info[$currentClassName] = array('(skipping)');
+				}
+
+				$level++;
+
+				$currentClass = $parentClass;
+				$currentClassName = $currentClass->getName();
+				$currentMethods = $parentMethods;
+				$parentClass = $currentClass->getParentClass();
+			}
+
+			$this->classMethodCache[$className] = $info;
+		}
+
+		return $this->classMethodCache[$className];
 	}
 
 
