@@ -60,7 +60,7 @@ class Aoe_TemplateHints_Model_Observer {
 			if (empty($rendererClass)) {
 				Mage::throwException('No renderer configured');
 			}
-			$this->renderer = Mage::getModel($rendererClass);
+			$this->renderer = Mage::getSingleton($rendererClass);
 			if (!is_object($this->renderer) || !$this->renderer instanceof Aoe_TemplateHints_Model_Renderer_Abstract) {
 				Mage::throwException('Render must be an instanceof Aoe_TemplateHints_Model_Renderer_Abstract');
 			}
