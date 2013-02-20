@@ -8,8 +8,8 @@
 class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_Renderer_Abstract {
 
 	/**
-	 * var array
-	 * */
+	 * @var array
+	 */
 	protected $aStatistics = array(
 		Aoe_TemplateHints_Helper_BlockInfo::TYPE_CACHED => 0,
 		Aoe_TemplateHints_Helper_BlockInfo::TYPE_IMPLICITLYCACHED => 0,
@@ -108,6 +108,14 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 		return $output;
 	}
 
+
+	/**
+	 * Render array as <dl>
+	 *
+	 * @param array $array
+	 * @param array $skipKeys
+	 * @return string
+	 */
 	protected function arrayToDtDd(array $array, array $skipKeys=array()) {
 		$output = '<dl>';
 		foreach ($array as $key => $value) {
