@@ -51,27 +51,11 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 			$id,
 			$blockInfo['cache-status'],
 			$blockContent,
-			$this->renderTitle($blockInfo),
+			$helper->renderTitle($blockInfo),
 			$this->renderBox($blockInfo, $path)
 		);
 
 		return $wrappedHtml;
-	}
-
-
-
-	/**
-	 * Render title
-	 *
-	 * @param array $info
-	 * @return string
-	 */
-	protected function renderTitle(array $info) {
-		$title = $info['name'];
-		if ($info['name'] != $info['alias'] && $info['alias']) {
-			$title .= ' (alias: ' . $info['alias'] . ')';
-		}
-		return $title;
 	}
 
 
@@ -84,6 +68,9 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 	 * @return string
 	 */
 	protected function renderBox(array $info, array $path) {
+
+		$helper = Mage::helper('aoe_templatehints/blockInfo'); /* @var $helper Aoe_TemplateHints_Helper_BlockInfo */
+
 		$output = '';
 
 		$output .= '<dl>';
@@ -99,10 +86,10 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 			$output .= '</dd>';
 		}
 
-		$output .= '<dt>'.Mage::helper('aoe_templatehints')->__('Block nesting').':</dt><dd>';
+		$output .= '<dt>'.$helper->__('Block nesting').':</dt><dd>';
 			$output .= '<ul class="path">';
 			foreach ($path as $step) {
-				$output .= '<li>'.$this->renderTitle($step).'</li>';
+				$output .= '<li>'.$helper->renderTitle($step).'</li>';
 			}
 			$output .= '</ul>';
 		$output .= '</dd>';

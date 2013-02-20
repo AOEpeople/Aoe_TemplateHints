@@ -108,4 +108,20 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 	}
 
 
+
+	/**
+	 * Render title
+	 *
+	 * @param array $info
+	 * @return string
+	 */
+	public function renderTitle(array $info) {
+		$title = $info['name'];
+		if ($info['name'] != $info['alias'] && $info['alias']) {
+			$title .= ' (alias: ' . $info['alias'] . ')';
+		}
+		return $title;
+	}
+
+
 }

@@ -5,6 +5,7 @@
  *
  * @author Fabrizio Branca
  */
+
 class Aoe_TemplateHints_Model_Observer {
 
 	/**
@@ -54,7 +55,10 @@ class Aoe_TemplateHints_Model_Observer {
 	 */
 	public function getRenderer() {
 		if (is_null($this->renderer)) {
-			$this->renderer = Mage::getModel('aoe_templatehints/renderer_opentip');
+			$this->renderer = Mage::getModel('aoe_templatehints/renderer_comment');
+			if (!is_object($this->renderer) || !$this->renderer instanceof Aoe_TemplateHints_Model_Renderer_Abstract) {
+				Mage::throwException('Render must be an instanceof Aoe_TemplateHints_Model_Renderer_Abstract');
+			}
 		}
 		return $this->renderer;
 	}
