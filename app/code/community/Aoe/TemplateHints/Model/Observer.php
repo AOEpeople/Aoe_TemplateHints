@@ -48,6 +48,7 @@ class Aoe_TemplateHints_Model_Observer {
 	}
 
 
+
 	/**
 	 * Get renderer
 	 *
@@ -55,7 +56,11 @@ class Aoe_TemplateHints_Model_Observer {
 	 */
 	public function getRenderer() {
 		if (is_null($this->renderer)) {
-			$this->renderer = Mage::getModel('aoe_templatehints/renderer_comment');
+			$rendererClass = Mage::getStoreConfig('dev/aoe_templatehints/templateHintRenderer');
+			if (empty($rendererClass)) {
+				Mage::throwException('No renderer configured');
+			}
+			$this->renderer = Mage::getModel($rendererClass);
 			if (!is_object($this->renderer) || !$this->renderer instanceof Aoe_TemplateHints_Model_Renderer_Abstract) {
 				Mage::throwException('Render must be an instanceof Aoe_TemplateHints_Model_Renderer_Abstract');
 			}

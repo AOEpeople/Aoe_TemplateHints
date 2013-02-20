@@ -35,4 +35,11 @@
 			</core_block_abstract_to_html_after>
 		</events>
 	</global>
+	<default>
+		<dev>
+			<aoe_templatehints>
+				<templateHintRenderer>aoe_templatehints/renderer_opentip</templateHintRenderer>
+			</aoe_templatehints>
+		</dev>
+	</default>
 </config>
