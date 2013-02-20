@@ -115,13 +115,14 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 					}
 				} else {
 					$info[$currentClassName] = array('(skipping)');
+                                        break;
 				}
 
 				$level++;
 
 				$currentClass = $parentClass;
 				$currentClassName = $currentClass->getName();
-				$currentMethods = $parentMethods;
+                                $currentMethods = $parentMethods;
 				$parentClass = $currentClass->getParentClass();
 			}
 
