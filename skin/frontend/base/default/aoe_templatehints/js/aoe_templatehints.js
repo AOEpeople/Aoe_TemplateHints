@@ -1,10 +1,12 @@
 Event.observe(window, "load", function() {
-    $$(".tpl-hint").each(function(node) {
-        var id = node.getAttribute('id');
-        node.observe('mouseover', function(event) {
+    document.on(
+        'mouseover',
+        '.tpl-hint',
+        function(event, element) {
             Event.stop(event);
+            id = element.getAttribute('id');
             new Tip(
-                this,
+                element,
                 event,
                 $(id + '-infobox').innerHTML,
                 $(id + '-title').innerHTML,
@@ -15,7 +17,6 @@ Event.observe(window, "load", function() {
                     group: 'ath'
                 }
             );
-        });
-    });
+        }.bind(this)
+    );
 });
-
