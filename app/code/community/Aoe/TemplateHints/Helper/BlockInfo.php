@@ -74,7 +74,7 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 	/**
 	 * Get block methods (incl. methods of parent classes)
 	 *
-	 * @param Mage_Core_Block_Abstract $className
+	 * @param string $className
 	 * @return array
 	 */
 	public function getClassMethods($className) {
@@ -95,10 +95,12 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 
 				$parentClassName = $parentClass->getName();
 
-				if (!in_array($currentClass->getName(), array('Mage_Core_Block_Abstract', 'Mage_Core_Block_Template'))) {
+				if (!in_array($currentClassName, array('Mage_Core_Block_Abstract', 'Mage_Core_Block_Template'))) {
 					$parentMethods = get_class_methods($parentClassName);
 					$tmp = array_diff($currentMethods, $parentMethods);
 					$info[$currentClassName] = array();
+
+					// render methods to "methodName($paramter1, $parameter2, ...)"
 					foreach ($tmp as $methodName) {
 
 						$parameters = array();
@@ -115,6 +117,7 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 					}
 				} else {
 					$info[$currentClassName] = array('(skipping)');
+					$parentMethods = array();
 				}
 
 				$level++;
