@@ -16,3 +16,5 @@
 .opentip .content { text-align: left; }
 .opentip dt { font-weight: bold; }
 .opentip dd { margin-left: 20px; margin-bottom: 10px; word-wrap: break-word; }
+
+dd dl { font-size: smaller; line-height: normal; }
