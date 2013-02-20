@@ -8,6 +8,17 @@
 class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_Renderer_Abstract {
 
 	/**
+	 * var array
+	 * */
+	protected $aStatistics = array(
+		Aoe_TemplateHints_Helper_BlockInfo::TYPE_CACHED => 0,
+		Aoe_TemplateHints_Helper_BlockInfo::TYPE_IMPLICITLYCACHED => 0,
+		Aoe_TemplateHints_Helper_BlockInfo::TYPE_NOTCACHED => 0,
+	);
+
+
+
+	/**
 	 * Init
 	 *
 	 * @param $wrappedHtml
@@ -42,6 +53,8 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 		$path = $helper->getBlockPath($block);
 		$blockInfo = $helper->getBlockInfo($block);
 
+		$this->aStatistics[$blockInfo['cache-status']]++;
+
 		$wrappedHtml = sprintf(
 			'<div id="tpl-hint-%1$s" class="tpl-hint %2$s">
 				%3$s
@@ -54,6 +67,11 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 			$helper->renderTitle($blockInfo),
 			$this->renderBox($blockInfo, $path)
 		);
+
+		$showStatistics = false; // experimental (want to add some styling here...)
+		if ($showStatistics && $blockInfo['name'] == 'core_profiler') {
+			$wrappedHtml .= '<pre>'.print_r($this->aStatistics, true).'</pre>';
+		}
 
 		return $wrappedHtml;
 	}
