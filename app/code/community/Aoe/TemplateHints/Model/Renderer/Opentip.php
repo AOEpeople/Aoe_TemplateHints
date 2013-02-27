@@ -95,13 +95,15 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 
 		$output .= $this->arrayToDtDd($info, array('name', 'alias', 'cache-status'));
 
-		$output .= '<dt>'.$helper->__('Block nesting').':</dt><dd>';
-			$output .= '<ul class="path">';
-			foreach ($path as $step) {
-				$output .= '<li>'.$helper->renderTitle($step).'</li>';
-			}
-			$output .= '</ul>';
-		$output .= '</dd>';
+		if (count($path) > 0) {
+			$output .= '<dt>'.$helper->__('Block nesting').':</dt><dd>';
+				$output .= '<ul class="path">';
+				foreach ($path as $step) {
+					$output .= '<li>'.$helper->renderTitle($step).'</li>';
+				}
+				$output .= '</ul>';
+			$output .= '</dd>';
+		}
 
 		$output .= '</dl>';
 
