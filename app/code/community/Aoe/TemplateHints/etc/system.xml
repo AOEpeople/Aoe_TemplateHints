@@ -10,8 +10,9 @@
 	<sections>
 		<dev>
 			<groups>
-				<aoe_templatehints>
+				<aoe_templatehints translate="label comment">
 					<label>AOE Template Hints</label>
+					<comment><![CDATA[Enable by adding <b>?ath=1</b> to the URL]]></comment>
 					<frontend_type>text</frontend_type>
 					<sort_order>100</sort_order>
 					<show_in_default>1</show_in_default>
