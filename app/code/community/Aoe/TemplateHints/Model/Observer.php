@@ -5,7 +5,6 @@
  *
  * @author Fabrizio Branca
  */
-
 class Aoe_TemplateHints_Model_Observer {
 
 	/**
