@@ -12,6 +12,8 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 	CONST TYPE_IMPLICITLYCACHED = 'implicitlycached';
 
 	protected $classMethodCache = array();
+	protected $remoteCallEnabled;
+	protected $remoteCallUrlTemplate;
 
 
 
@@ -33,6 +35,18 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 		}
 
 		$info['class'] = get_class($block);
+
+		if ($this->getRemoteCallEnabled()) {
+			$fileAndLine = Mage::helper('aoe_templatehints/classInfo')->findFileAndLine($info['class']);
+			if ($fileAndLine) {
+				$url = sprintf($this->getRemoteCallUrlTemplate(), $fileAndLine['file'], $fileAndLine['line']);
+				$info['class'] = sprintf($this->getRemoteCallLinkTemplate(),
+					$url,
+					$info['class']
+				);
+			}
+		}
+
 		$info['module'] = $block->getModuleName();
 
 		if ($block instanceof Mage_Cms_Block_Block) {
@@ -44,6 +58,15 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 		$templateFile = $block->getTemplateFile();
 		if ($templateFile) {
 			$info['template'] = $templateFile;
+
+			if ($this->getRemoteCallEnabled()) {
+				$url = sprintf($this->getRemoteCallUrlTemplate(), Mage::getBaseDir('design') . DS . $templateFile, 0);
+				$info['template'] = sprintf($this->getRemoteCallLinkTemplate(),
+					$url,
+					$templateFile
+				);
+			}
+
 		}
 
 		// cache information
@@ -65,10 +88,50 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
 			$info['cache-status'] = self::TYPE_IMPLICITLYCACHED; // not cached, but within cached
 		}
 
-		$info['methods'] = $this->getClassMethods($info['class']);
+		$info['methods'] = $this->getClassMethods(get_class($block));
 
 		return $info;
 	}
+
+
+
+	/**
+	 * Check if remote call is enabled in configuration
+	 *
+	 * @return bool
+	 */
+	public function getRemoteCallEnabled() {
+		if (is_null($this->remoteCallEnabled)) {
+			$this->remoteCallEnabled = Mage::getStoreConfigFlag('dev/aoe_templatehints/enablePhpstormRemoteCall');
+		}
+		return $this->remoteCallEnabled;
+	}
+
+
+
+	/**
+	 * Get remote call url template
+	 *
+	 * @return mixed
+	 */
+	public function getRemoteCallUrlTemplate() {
+		if (is_null($this->remoteCallUrlTemplate)) {
+			$this->remoteCallUrlTemplate = Mage::getStoreConfig('dev/aoe_templatehints/remoteCallUrlTemplate');
+		}
+		return $this->remoteCallUrlTemplate;
+	}
+
+
+
+	/**
+	 * Get link template for remote calls
+	 *
+	 * @return string
+	 */
+	public function getRemoteCallLinkTemplate() {
+		return '<a href="%s" onclick="var ajax = new XMLHttpRequest(); ajax.open(\'GET\', this.href); ajax.send(null); return false">%s</a>';
+	}
+
 
 
 	/**

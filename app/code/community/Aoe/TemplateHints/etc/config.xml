@@ -39,6 +39,7 @@
 		<dev>
 			<aoe_templatehints>
 				<templateHintRenderer>aoe_templatehints/renderer_opentip</templateHintRenderer>
+				<remoteCallUrlTemplate><![CDATA[http://localhost:8091/?message=%s:%s]]></remoteCallUrlTemplate>
 			</aoe_templatehints>
 		</dev>
 	</default>

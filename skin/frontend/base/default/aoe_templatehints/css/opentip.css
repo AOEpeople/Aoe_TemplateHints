@@ -38,6 +38,10 @@
 }
 .opentip .title   { font-weight: bold; }
 .opentip .content { width: auto !important;}
+.opentip a {
+    color: #000;
+    text-decoration: underline;
+}
 
 
 .opentip .loadingIndication {
