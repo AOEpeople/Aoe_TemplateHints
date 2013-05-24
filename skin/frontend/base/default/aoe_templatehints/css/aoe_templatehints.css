@@ -1,10 +1,11 @@
-.tpl-hint { outline: 1px dotted white; margin: 2px; padding: 2px; overflow: hidden; }
+.tpl-hint-border { outline: 1px dotted white; margin: 2px; padding: 2px; overflow: hidden; }
 
 .notcached { outline-color: red; }
 .cached { outline-color: green; }
 .implicitlycached { outline-color: orange; }
 
 .tpl-hint-infobox { width: 500px; background-color: white; outline: 1px solid black; z-index: 1000; position: absolute; }
+
 .tpl-hint:hover { outline-style: solid; }
 
 .notcached:hover { box-shadow: 0 0 3px 3px red; }
