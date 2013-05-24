@@ -36,9 +36,13 @@ class Aoe_TemplateHints_Model_Observer {
 	 */
 	public function showHints() {
 		if (is_null($this->showHints)) {
+
+            if (!Mage::getStoreConfig('dev/aoe_templatehints/enabled')) {
+                return;
+            }
 			$this->showHints = false;
 			if (Mage::helper('core')->isDevAllowed()) {
-				if (Mage::getModel('core/cookie')->get('ath') || Mage::getSingleton('core/app')->getRequest()->get('ath')) {
+				if (Mage::getStoreConfig('dev/aoe_templatehints/alwaysOn') || Mage::getModel('core/cookie')->get('ath') || Mage::getSingleton('core/app')->getRequest()->get('ath')) {
 					$this->showHints = true;
 				}
 			}
