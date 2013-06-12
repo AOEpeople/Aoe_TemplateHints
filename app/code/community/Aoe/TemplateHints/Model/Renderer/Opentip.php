@@ -37,6 +37,15 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 	}
 
 
+    /**
+     * Get CSS class for the hint
+     *
+     * @return string
+     */
+    protected function getHintClass()
+    {
+        return 'tpl-hint tpl-hint-border';
+    }
 
 	/**
 	 * Render template hint
@@ -56,13 +65,13 @@ class Aoe_TemplateHints_Model_Renderer_Opentip extends Aoe_TemplateHints_Model_R
 		$this->aStatistics[$blockInfo['cache-status']]++;
 
 		$wrappedHtml = sprintf(
-			'<div id="tpl-hint-%1$s" class="tpl-hint %2$s">
+			'<div id="tpl-hint-%1$s" class="%2$s">
 				%3$s
 				<div id="tpl-hint-%1$s-title" style="display: none;">%4$s</div>
 				<div id="tpl-hint-%1$s-infobox" style="display: none;">%5$s</div>
 			</div>',
 			$id,
-			$blockInfo['cache-status'],
+            $this->getHintClass() . ' ' . $blockInfo['cache-status'],
 			$blockContent,
 			$helper->renderTitle($blockInfo),
 			$this->renderBox($blockInfo, $path)
