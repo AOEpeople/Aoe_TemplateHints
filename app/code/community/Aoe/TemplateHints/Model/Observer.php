@@ -28,6 +28,15 @@ class Aoe_TemplateHints_Model_Observer {
 	protected $renderer;
 
 
+    /**
+     * @var array
+     * */
+    protected $aStatistics = array(
+        self::TYPE_CACHED => 0,
+        self::TYPE_IMPLICITLYCACHED => 0,
+        self::TYPE_NOTCACHED => 0,
+    );
+
 
 	/**
 	 * Check if hints should be displayed
@@ -99,8 +108,13 @@ class Aoe_TemplateHints_Model_Observer {
 		$transport = $params->getTransport();
 
 		$this->hintId++;
+        $this->aStatistics[$blockInfo['cache-status']]++;
 
 		$wrappedHtml .= $this->getRenderer()->render($block, $transport->getHtml(), $this->hintId);
+
+        if($blockInfo['name'] =='core_profiler'){
+            $wrappedHtml .= '<pre>'.print_r($this->aStatistics, true).'</pre>';
+        }
 
 		$transport->setHtml($wrappedHtml);
 	}
