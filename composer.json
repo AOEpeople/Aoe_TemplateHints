@@ -1,6 +1,6 @@
 {
-    "name": "fbrnc/Aoe_TemplateHints",
-    "license": "OSL-3.0",
+    "name": "aoepeople/aoe_templatehints",
+    "license": "GPLv3",
     "type": "magento-module",
     "description": "Advanced Template Hints for Magento",
     "homepage": "http://www.fabrizio-branca.de/magento-advanced-template-hints-20.html",
@@ -10,7 +10,7 @@
     "authors":[
         {
             "name":"Fabrizio Branca",
-            "email":"mail@{firstname}-{lastname}.de"
+            "email":"fabrizio.branca@aoe.com"
         }
     ]
 }
