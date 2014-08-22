@@ -1,9 +1,5 @@
 # Aoe_TemplateHints
 
-## PHPStorm support
-
-Install "Remote Call" plugin
-=======
 http://www.fabrizio-branca.de/magento-advanced-template-hints-20.html
 
 Aoe_TemplateHints extends the default Magento "Template Hints" developer functionality by adding more information for each block:
@@ -18,3 +14,7 @@ Aoe_TemplateHints extends the default Magento "Template Hints" developer functio
 To show the template hints simply add `?ath=1` to the shop URL after installing this module.
 
 Please make sure to uninstall/deactive the module before going live!
+
+## PHPStorm support
+
+Install "Remote Call" plugin
