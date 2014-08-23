@@ -7,6 +7,10 @@
     "require": {
         "magento-hackathon/magento-composer-installer": "*"
     },
+    "replace": {
+        "fbrnc/aoe_templatehints": "*",
+        "aoemedia/aoe_templatehints": "*"
+    },
     "authors":[
         {
             "name":"Fabrizio Branca",
