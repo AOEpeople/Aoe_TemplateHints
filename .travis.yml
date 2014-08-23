@@ -17,3 +17,9 @@ before_script:
 script:
   - cd ${TRAVIS_BUILD_DIR}/../build-environment/htdocs
   - ${TRAVIS_BUILD_DIR}/../build-environment/bin/phpunit --colors -d display_errors=1
+notifications:
+  email:
+    recipients:
+      - travis@fabrizio-branca.de
+    on_success: always
+    on_failure: always
