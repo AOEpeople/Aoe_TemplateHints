@@ -1,5 +1,7 @@
 # Aoe_TemplateHints
 
+[![Build Status](https://travis-ci.org/AOEpeople/Aoe_TemplateHints.svg?branch=master)](https://travis-ci.org/AOEpeople/Aoe_TemplateHints)
+
 http://www.fabrizio-branca.de/magento-advanced-template-hints-20.html
 
 Aoe_TemplateHints extends the default Magento "Template Hints" developer functionality by adding more information for each block:
