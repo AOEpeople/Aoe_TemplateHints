@@ -7,22 +7,27 @@
  */
 -->
 <config>
+
     <modules>
         <Aoe_TemplateHints>
             <version>0.3.0</version>
         </Aoe_TemplateHints>
     </modules>
+
     <global>
+
         <models>
             <aoe_templatehints>
                 <class>Aoe_TemplateHints_Model</class>
             </aoe_templatehints>
         </models>
+
         <helpers>
             <aoe_templatehints>
                 <class>Aoe_TemplateHints_Helper</class>
             </aoe_templatehints>
         </helpers>
+
         <events>
             <core_block_abstract_to_html_after>
                 <observers>
@@ -34,13 +39,25 @@
                 </observers>
             </core_block_abstract_to_html_after>
         </events>
+
     </global>
+
     <default>
         <dev>
             <aoe_templatehints>
                 <templateHintRenderer>aoe_templatehints/renderer_opentip</templateHintRenderer>
+                <enablePhpstormRemoteCall>0</enablePhpstormRemoteCall>
                 <remoteCallUrlTemplate><![CDATA[http://localhost:8091/?message=%s:%s]]></remoteCallUrlTemplate>
             </aoe_templatehints>
         </dev>
     </default>
+
+    <phpunit>
+        <suite>
+            <modules>
+                <Aoe_TemplateHints/>
+            </modules>
+        </suite>
+    </phpunit>
+
 </config>

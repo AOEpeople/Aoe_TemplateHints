@@ -11,9 +11,9 @@ Aoe_TemplateHints extends the default Magento "Template Hints" developer functio
 - can be triggered without changing configuration settings in the backend
 - ...and is much more fun to use :)
 
-To show the template hints simply add `?ath=1` to the shop URL after installing this module.
+To show the template hints simply add `?ath=1` to the shop URL after installing this module. (And make sure the request IP is allowed in dev/restrict/allow_ips)
 
-Please make sure to uninstall/deactive the module before going live!
+Please make sure to uninstall/deactivate the module before going live!
 
 ## PHPStorm support
 

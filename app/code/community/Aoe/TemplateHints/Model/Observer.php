@@ -38,7 +38,7 @@ class Aoe_TemplateHints_Model_Observer {
         if (is_null($this->showHints)) {
             $this->showHints = false;
             if (Mage::helper('core')->isDevAllowed()) {
-                if (Mage::getModel('core/cookie')->get('ath') || Mage::getSingleton('core/app')->getRequest()->get('ath')) {
+                if (Mage::getSingleton('core/cookie')->get('ath') || Mage::getSingleton('core/app')->getRequest()->get('ath')) {
                     $this->showHints = true;
                 }
             }
@@ -89,6 +89,7 @@ class Aoe_TemplateHints_Model_Observer {
 
         $wrappedHtml = '';
 
+        // will only be called once and allows renderes to initialize themselves (e.g. adding js/css)
         if ($this->init) {
             $wrappedHtml = $this->getRenderer()->init($wrappedHtml);
             $this->init = false;
