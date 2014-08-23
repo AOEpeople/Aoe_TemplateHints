@@ -1,0 +1,18 @@
+language: php
+php:
+  - 5.3
+  - 5.4
+env:
+  - MAGENTO_VERSION=magento-ce-1.9.0.1
+  - MAGENTO_VERSION=magento-ce-1.8.1.0
+  - MAGENTO_VERSION=magento-ce-1.8.0.0
+  - MAGENTO_VERSION=magento-ce-1.7.0.2
+  - MAGENTO_VERSION=magento-ce-1.6.2.0
+before_script:
+  - mysql -e 'create database mage;'
+  - mysql -e 'create database mage_test;'
+  - git clone https://github.com/AOEpeople/MageTestStand.git ${TRAVIS_BUILD_DIR}/../build-environment
+  - cp -rf ${TRAVIS_BUILD_DIR} .modman/
+  - ${TRAVIS_BUILD_DIR}/../build-environment/install.sh
+script:
+  - ${TRAVIS_BUILD_DIR}/../build-environment/bin/phpunit --colors -d display_errors=1
