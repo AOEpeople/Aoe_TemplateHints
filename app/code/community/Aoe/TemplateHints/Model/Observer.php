@@ -91,7 +91,7 @@ class Aoe_TemplateHints_Model_Observer {
 
         // will only be called once and allows renderes to initialize themselves (e.g. adding js/css)
         if ($this->init) {
-            $wrappedHtml = $this->getRenderer()->init($wrappedHtml);
+            $wrappedHtml = '<!-- INIT AOE_TEMPLATEHINTS RENDERER START -->' . $this->getRenderer()->init($wrappedHtml) . '<!-- INIT AOE_TEMPLATEHINTS RENDERER STOP -->';
             $this->init = false;
         }
 
