@@ -80,12 +80,12 @@ class Aoe_TemplateHints_Model_Renderer_Comment extends Aoe_TemplateHints_Model_R
                 continue;
             }
     
-            $output .= tabsForIndentation($indentationLevel);
+            $output .= $this->tabsForIndentation($indentationLevel);
     
             if (!is_array($value)) {
                 if (!is_int($key)) {
                     $output .= ucfirst($key) . ":\n";
-                    $output .= tabsForIndentation($indentationLevel+1);
+                    $output .= $this->tabsForIndentation($indentationLevel+1);
                 }
                 $output .= $value . "\n";
             }
@@ -105,9 +105,9 @@ class Aoe_TemplateHints_Model_Renderer_Comment extends Aoe_TemplateHints_Model_R
     * @param int $indentationLevel
     * @return string
     */
-    protected function tabsForIndentation(int $indentationLevel) {
+    protected function tabsForIndentation($indentationLevel) {
         $output = '';
-        for($i = 0; $i < $indentationCount; $i++) {
+        for($i = 0; $i < $indentationLevel; $i++) {
             $output .= "\t";
         }
     
