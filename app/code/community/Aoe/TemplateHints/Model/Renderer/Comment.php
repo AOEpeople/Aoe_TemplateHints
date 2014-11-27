@@ -53,9 +53,9 @@ class Aoe_TemplateHints_Model_Renderer_Comment extends Aoe_TemplateHints_Model_R
 
         $output = '';
         
-        $output .= $this->arrayToTabList($info, array('name', 'alias'));   
+        $output .= $this->arrayToTabList($info, array('name', 'alias'));
         
-        if (count($path) > 0) { 
+        if (count($path) > 0) {
             $output .= "\t" . $helper->__('Block nesting').":\n";
             foreach ($path as $step) {
                 $output .= "\t\t" . $helper->renderTitle($step) . "\n";
@@ -64,32 +64,53 @@ class Aoe_TemplateHints_Model_Renderer_Comment extends Aoe_TemplateHints_Model_R
         
         return $output;
     }
-    
-    protected function arrayToTabList(array $array, array $skipKeys=array(), $nestingTabs = "\t") {
+        
+    /**
+    * convert nested array to tab indented list
+    *
+    * @param array $array
+    * @param array $skipKeys
+    * @param int $indentationLevel
+    * @return string
+    */
+    protected function arrayToTabList(array $array, array $skipKeys=array(), $indentationLevel = 1) {
         $output = '';
-        foreach ($array as $key => $value) {
+        foreach($array as $key => $value) {
             if (in_array($key, $skipKeys, true)) {
                 continue;
             }
-            if (is_array($value)) {
-                $nestingTabs .= "\t";
-                $value = $this->arrayToTabList($value, $skipKeys, $nestingTabs);
-                if (strpos($value, "\t\t") < 2) {
-                    $value = substr($value, 2);
-                }
-                else {
-                    $value = substr($value, 1);
-                }
-                $nestingTabs = substr($nestingTabs, -1);
-            }
-            if (is_int($key)) {
-                $output .= "$nestingTabs\t$value\n";
-            } else {
-                $output .= "$nestingTabs" . ucfirst($key) . ":\n";
-                $output .= "$nestingTabs\t$value\n";
-            }
     
+            $output .= tabsForIndentation($indentationLevel);
+    
+            if (!is_array($value)) {
+                if (!is_int($key)) {
+                    $output .= ucfirst($key) . ":\n";
+                    $output .= tabsForIndentation($indentationLevel+1);
+                }
+                $output .= $value . "\n";
+            }
+            else {
+                $output .= ucfirst($key) . ":\n";
+                $output .= $this->arrayToTabList($value, $skipKeys, $indentationLevel+1);
+            }
         }
+    
+        return $output;
+    }
+    
+    
+    /**
+    * Outputs Tabs
+    *
+    * @param int $indentationLevel
+    * @return string
+    */
+    protected function tabsForIndentation(int $indentationLevel) {
+        $output = '';
+        for($i = 0; $i < $indentationCount; $i++) {
+            $output .= "\t";
+        }
+    
         return $output;
     }
 }
