@@ -89,13 +89,13 @@ class Aoe_TemplateHints_Model_Observer {
 
         $wrappedHtml = '';
 
+        $block = $params->getBlock(); /* @var $block Mage_Core_Block_Abstract */
+
         // will only be called once and allows renderes to initialize themselves (e.g. adding js/css)
-        if ($this->init) {
+        if ($this->init && strpos(get_class($block), "Mage_Persistent") === false) {
             $wrappedHtml = '<!-- INIT AOE_TEMPLATEHINTS RENDERER START -->' . $this->getRenderer()->init($wrappedHtml) . '<!-- INIT AOE_TEMPLATEHINTS RENDERER STOP -->';
             $this->init = false;
         }
-
-        $block = $params->getBlock(); /* @var $block Mage_Core_Block_Abstract */
 
         $transport = $params->getTransport();
 
