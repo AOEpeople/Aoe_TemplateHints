@@ -29,6 +29,9 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
             'name' => $block->getNameInLayout(),
             'alias' => $block->getBlockAlias(),
         );
+        if( $info['name'] == 'root' ) {
+            $info['handle'] = strtolower($block->getAction()->getFullActionName());
+        }
 
         if (!$fullInfo) {
             return $info;
