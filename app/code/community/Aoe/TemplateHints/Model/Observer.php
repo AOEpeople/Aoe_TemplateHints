@@ -18,6 +18,11 @@ class Aoe_TemplateHints_Model_Observer {
     protected $init = true;
 
     /**
+     * @var bool
+     */
+    protected $afterHead = false;
+
+    /**
      * @var int
      */
     protected $hintId = 0;
@@ -92,9 +97,13 @@ class Aoe_TemplateHints_Model_Observer {
         $block = $params->getBlock(); /* @var $block Mage_Core_Block_Abstract */
 
         // will only be called once and allows renderes to initialize themselves (e.g. adding js/css)
-        if ($this->init && !Mage::getStoreConfigFlag('advanced/modules_disable_output/' . $block->getModuleName()) && $block->getNameInLayout()) {
+        if ($this->init && $this->afterHead && !Mage::getStoreConfigFlag('advanced/modules_disable_output/' . $block->getModuleName()) && $block->getNameInLayout()) {
             $wrappedHtml = '<!-- INIT AOE_TEMPLATEHINTS RENDERER START -->' . $this->getRenderer()->init($wrappedHtml) . '<!-- INIT AOE_TEMPLATEHINTS RENDERER STOP -->';
             $this->init = false;
+        }
+
+        if ($block->getNameInLayout() == 'head') {
+            $this->afterHead = true;
         }
 
         $transport = $params->getTransport();
