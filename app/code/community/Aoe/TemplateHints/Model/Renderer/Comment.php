@@ -25,10 +25,11 @@ class Aoe_TemplateHints_Model_Renderer_Comment extends Aoe_TemplateHints_Model_R
         $blockInfo = $helper->getBlockInfo($block);
 
         $wrappedHtml = sprintf(
+            "\n".
             '<!-- [START: %1$s] %4$s'."\n".'%5$s -->'.
             '%3$s'.
             '<!-- [END: %1$s] %4$s -->'.
-            "\n"."\n",
+            "\n",
             $id,
             $blockInfo['cache-status'],
             $blockContent,
