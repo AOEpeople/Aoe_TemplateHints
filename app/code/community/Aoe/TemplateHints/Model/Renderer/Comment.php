@@ -27,7 +27,9 @@ class Aoe_TemplateHints_Model_Renderer_Comment extends Aoe_TemplateHints_Model_R
         $wrappedHtml = sprintf(
             "\n".
             '<!-- [START: %1$s] %4$s'."\n".'%5$s -->'.
+            "\n".
             '%3$s'.
+            "\n".
             '<!-- [END: %1$s] %4$s -->'.
             "\n",
             $id,
