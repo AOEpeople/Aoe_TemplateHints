@@ -28,7 +28,7 @@ class Aoe_TemplateHints_Model_Renderer_Comment extends Aoe_TemplateHints_Model_R
             '<!-- [START: %1$s] %4$s'."\n".'%5$s -->'.
             '%3$s'.
             '<!-- [END: %1$s] %4$s -->'.
-            ."\n"."\n",
+            "\n"."\n",
             $id,
             $blockInfo['cache-status'],
             $blockContent,
