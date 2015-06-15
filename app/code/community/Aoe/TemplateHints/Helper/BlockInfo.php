@@ -210,7 +210,8 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
     public function getBlockPath(Mage_Core_Block_Abstract $block) {
         $blockPath = array();
         $step = $block->getParentBlock();
-        while ($step instanceof Mage_Core_Block_Abstract) {
+	$i = 0;
+        while ($i++ < 20 && $step instanceof Mage_Core_Block_Abstract) {
             $blockPath[] = $this->getBlockInfo($step, false);
             $step = $step->getParentBlock();
         }
@@ -229,7 +230,8 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
      */
     public function isWithinCachedBlock(Mage_Core_Block_Abstract $block) {
         $step = $block;
-        while ($step instanceof Mage_Core_Block_Abstract) {
+	$i = 0;
+        while ($i++ < 20 && $step instanceof Mage_Core_Block_Abstract) {
             if (!is_null($step->getCacheLifetime())) {
                 return true;
             }
