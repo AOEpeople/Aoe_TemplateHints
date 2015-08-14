@@ -56,7 +56,7 @@ class Aoe_TemplateHints_Helper_BlockInfo extends Mage_Core_Helper_Abstract {
             $info['cms-pageId'] = $block->getPage()->getIdentifier();
         }
         if ($block instanceof Mage_Cms_Block_Widget_Block) {
-            $info['widget-blockId'] = $block->getData('block_id');
+            $info['widget-blockId'] = $block->getBlockId();
         }
         $templateFile = $block->getTemplateFile();
         if ($templateFile) {
