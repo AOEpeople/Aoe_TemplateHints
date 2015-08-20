@@ -66,6 +66,13 @@ class Aoe_TemplateHints_Test_Model_Renderer_Opentip extends EcomDev_PHPUnit_Test
     public function blocksProvider() {
         $provider = array();
 
+
+        //create a block named head so _afterHead in observer gets triggered
+        $block = Mage::app()->getLayout()->createBlock('core/text'); /* @var $block Mage_Core_Block_Text */
+        $block->setText('HELLO WORLD');
+        $block->setNameInLayout('head');
+        $provider[] = array($block, array(), array());
+
         $block = Mage::app()->getLayout()->createBlock('core/text'); /* @var $block Mage_Core_Block_Text */
         $block->setText('HELLO WORLD');
 
@@ -74,7 +81,7 @@ class Aoe_TemplateHints_Test_Model_Renderer_Opentip extends EcomDev_PHPUnit_Test
             '/<!-- INIT AOE_TEMPLATEHINTS RENDERER STOP -->/'
         );
 
-        // first block contains init
+        // first block after head contains init
         $provider[] = array($block, $contains, array());
         // second doesn't
         $provider[] = array($block, array(), $contains);
