@@ -42,7 +42,7 @@ class Aoe_TemplateHints_Test_Model_Observer extends EcomDev_PHPUnit_Test_Case
         $requestMock->expects($this->any())
             ->method('get')
             ->will($this->returnValue($paramValue));
-        $app = Mage::getSingleton('core/app')->setRequest($requestMock);
+        $app = Mage::app()->setRequest($requestMock);
 
         $this->assertEquals($expectedShowHints, $this->observer->showHints());
     }

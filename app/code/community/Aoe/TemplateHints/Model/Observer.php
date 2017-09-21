@@ -43,7 +43,7 @@ class Aoe_TemplateHints_Model_Observer {
         if (is_null($this->showHints)) {
             $this->showHints = false;
             if (Mage::helper('core')->isDevAllowed()) {
-                if (Mage::getSingleton('core/cookie')->get('ath') || Mage::getSingleton('core/app')->getRequest()->get('ath')) {
+                if (Mage::getSingleton('core/cookie')->get('ath') || Mage::app()->getRequest()->get('ath')) {
                     $this->showHints = true;
                 }
             }
