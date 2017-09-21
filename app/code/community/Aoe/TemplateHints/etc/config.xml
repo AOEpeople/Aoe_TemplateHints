@@ -47,7 +47,7 @@
             <aoe_templatehints>
                 <templateHintRenderer>aoe_templatehints/renderer_opentip</templateHintRenderer>
                 <enablePhpstormRemoteCall>0</enablePhpstormRemoteCall>
-                <remoteCallUrlTemplate><![CDATA[http://localhost:8091/?message=%s:%s]]></remoteCallUrlTemplate>
+                <remoteCallUrlTemplate><![CDATA[http://localhost:63342/api/file/%s:%s]]></remoteCallUrlTemplate>
             </aoe_templatehints>
         </dev>
     </default>
