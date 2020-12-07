@@ -24,7 +24,7 @@ class Aoe_TemplateHints_Test_Model_Renderer_Opentip extends EcomDev_PHPUnit_Test
         $this->replaceByMock('singleton', 'core/cookie', $cookie);
     }
 
-    public function setUp() {
+    public function setUp() : void {
         $this->setConfigValue('default/dev/aoe_templatehints/templateHintRenderer', 'aoe_templatehints/renderer_opentip');
         $this->enableHints();
     }

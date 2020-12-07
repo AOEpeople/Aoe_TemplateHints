@@ -8,7 +8,7 @@ class Aoe_TemplateHints_Test_Model_Observer extends EcomDev_PHPUnit_Test_Case
      */
     protected $observer;
 
-    public function setUp() {
+    public function setUp() : void {
         $this->observer = Mage::getModel('aoe_templatehints/observer');
     }
 
